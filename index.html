@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>QR CODE GENERATOR</title>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <h2 style="text-align: center;margin-top: 2rem;">QR code Generator</h2>
+        <div>
+            <form id="QRForm" action="">
+                <div class="mt-5">
+                    <textarea name="text" placeholder="enter URL or text here .. " class="form-control"
+                        rows="1"></textarea>
+                    <button onclick="ChangeQuantity()" type="submit" class="btn btn-primary mt-3 ">Generate QR
+                        code</button>
+                </div>
+            </form>
+        </div>
+        <div class="mt-5  ">
+            <div style=" display: flex; justify-content: center;" class="">
+                <a class="" id="QRdownload" href="" download="Barcode">
+                    <img style=" width: 20rem;height: 20rem;" id="QRimage" src="">
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function ChangeQuantity() {
+            const $form = $('#QRForm')
+            $form.on('submit', submitHandler)
+            function submitHandler(e) {
+                e.preventDefault()
+                $.ajax({
+                    url: '/submitQRForm',
+                    type: 'POST',
+                    data: $form.serialize(),
+                    success: (response) => {    
+                        document.getElementById("QRimage").src = response
+                        document.getElementById("QRdownload").href = response
+
+                    }
+                })
+            }
+        }
+    </script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
